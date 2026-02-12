@@ -1,5 +1,7 @@
 # Mac 端多 OpenClaw 实例配置指南
 
+> **原文链接**：[CryptoMiaobug/4AI - Multi-OpenClaw-Setup-on-Mac.md](https://github.com/CryptoMiaobug/4AI/blob/main/Multi-OpenClaw-Setup-on-Mac.md)
+
 本指南介绍如何在一台 Mac 上运行多个独立的 OpenClaw 实例，每个实例由不同的 AI 模型驱动，通过共享资源进行协作。
 
 ---
