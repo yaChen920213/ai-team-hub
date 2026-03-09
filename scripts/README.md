@@ -4,15 +4,20 @@
 
 ## 当前脚本
 
-- `OpenClaw_Visual.command`
+- `OpenClaw_Form.command`
   - 对应实例：`~/.openclaw-visual`
   - 对应端口：`18790`
-  - 用途：启动或连接 Visual 实例
+  - 用途：启动或连接 Form 实例（品牌 / 包装 / 电商设计）
 
-- `OpenClaw_Copy.command`
+- `OpenClaw_Wit.command`
   - 对应实例：`~/.openclaw-copy`
   - 对应端口：`18800`
-  - 用途：启动或连接 Copy 实例
+  - 用途：启动或连接 Wit 实例（品牌 / 包装 / 电商文案 / 新媒体文案）
+
+- `OpenClaw_Lens.command`
+  - 对应实例：`~/.openclaw-lens`
+  - 对应端口：`18810`
+  - 用途：启动或连接 Lens 实例（平面 / 摄影 / 视频 / 音频）
 
 ---
 
@@ -47,8 +52,9 @@
 ### 方式 2：终端运行
 
 ```bash
-/Users/yachen/ai-team-hub/scripts/OpenClaw_Visual.command
-/Users/yachen/ai-team-hub/scripts/OpenClaw_Copy.command
+/Users/yachen/ai-team-hub/scripts/OpenClaw_Form.command
+/Users/yachen/ai-team-hub/scripts/OpenClaw_Wit.command
+/Users/yachen/ai-team-hub/scripts/OpenClaw_Lens.command
 ```
 
 ---
@@ -70,6 +76,7 @@
 
 - `~/Library/LaunchAgents/ai.openclaw.gateway.visual.plist`
 - `~/Library/LaunchAgents/ai.openclaw.gateway.copy.plist`
+- `~/Library/LaunchAgents/ai.openclaw.gateway.lens.plist`
 
 LaunchAgent 负责：
 - 开机自启
@@ -96,7 +103,7 @@ launchctl list | grep -i openclaw
 ```bash
 python3 - <<'PY'
 import urllib.request
-for port in (18790, 18800):
+for port in (18790, 18800, 18810):
     url=f'http://127.0.0.1:{port}/health'
     try:
         r=urllib.request.urlopen(url, timeout=3)
@@ -111,6 +118,7 @@ PY
 ```bash
 tail -100 /Users/yachen/.openclaw-visual/logs/gateway.err.log
 tail -100 /Users/yachen/.openclaw-copy/logs/gateway.err.log
+tail -100 /Users/yachen/.openclaw-lens/logs/gateway.err.log
 ```
 
 ---

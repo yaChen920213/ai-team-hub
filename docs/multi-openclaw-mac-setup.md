@@ -4,12 +4,22 @@
 
 ## 背景
 
-这台 Mac 上已经存在主 OpenClaw 实例，同时又新增了两个实例：
+这台 Mac 上已经存在主 OpenClaw 实例，后来又逐步新增了三个专业分身：
 
-- `~/.openclaw-visual`
-- `~/.openclaw-copy`
+- `~/.openclaw-visual` → **Form**
+- `~/.openclaw-copy` → **Wit**
+- `~/.openclaw-lens` → **Lens**
 
-目标是让三个实例长期共存、互不串线、各自独立在线。
+目标是让四个实例长期共存、互不串线、各自独立在线。
+
+---
+
+## 当前正式实例拓扑
+
+- 主实例：主控 / 通用 / 总协调
+- **Form**：品牌 / 包装 / 电商设计
+- **Wit**：品牌 / 包装 / 电商文案 / 新媒体文案
+- **Lens**：平面 / 摄影 / 视频 / 音频
 
 ---
 
@@ -67,14 +77,16 @@
 ### 一、实例目录
 
 - 主实例：`~/.openclaw`
-- Visual 实例：`~/.openclaw-visual`
-- Copy 实例：`~/.openclaw-copy`
+- Form 实例（目录仍为 `~/.openclaw-visual`）
+- Wit 实例（目录仍为 `~/.openclaw-copy`）
+- Lens 实例：`~/.openclaw-lens`
 
 ### 二、端口规划
 
 - 主实例：`18789`
-- Visual：`18790`
-- Copy：`18800`
+- Form（目录仍为 `~/.openclaw-visual`）：`18790`
+- Wit（目录仍为 `~/.openclaw-copy`）：`18800`
+- Lens：`18810`
 
 ### 三、先把两个新实例默认模型切走
 
@@ -106,29 +118,46 @@
 
 当前脚本：
 
-- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Visual.command`
-- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Copy.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Form.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Wit.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Lens.command`
 
-### 五、真正稳定的做法：为两个实例创建独立 LaunchAgent
+运维脚本：
 
-新增两个 LaunchAgent：
+- `/Users/yachen/ai-team-hub/ops/healthcheck-all.sh`
+- `/Users/yachen/ai-team-hub/ops/start-all.sh`
+- `/Users/yachen/ai-team-hub/ops/stop-all.sh`
+- `/Users/yachen/ai-team-hub/ops/restart-all.sh`
+- `/Users/yachen/ai-team-hub/ops/status-all.sh`
+
+### 五、真正稳定的做法：为三个专业实例创建独立 LaunchAgent
+
+新增三个 LaunchAgent：
 
 - `~/Library/LaunchAgents/ai.openclaw.gateway.visual.plist`
 - `~/Library/LaunchAgents/ai.openclaw.gateway.copy.plist`
+- `~/Library/LaunchAgents/ai.openclaw.gateway.lens.plist`
 
-#### Visual LaunchAgent
+#### Form LaunchAgent
 
 - Label: `ai.openclaw.gateway.visual`
 - `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-visual`
 - `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-visual/openclaw.json`
 - `OPENCLAW_GATEWAY_PORT=18790`
 
-#### Copy LaunchAgent
+#### Wit LaunchAgent
 
 - Label: `ai.openclaw.gateway.copy`
 - `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-copy`
 - `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-copy/openclaw.json`
 - `OPENCLAW_GATEWAY_PORT=18800`
+
+#### Lens LaunchAgent
+
+- Label: `ai.openclaw.gateway.lens`
+- `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-lens`
+- `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-lens/openclaw.json`
+- `OPENCLAW_GATEWAY_PORT=18810`
 
 加载后验证成功。
 
@@ -140,19 +169,22 @@
 
 - `http://127.0.0.1:18790/health` → `200`
 - `http://127.0.0.1:18800/health` → `200`
+- `http://127.0.0.1:18810/health` → `200`
 
 说明：
 
-- Visual gateway 正在监听
-- Copy gateway 正在监听
+- Form gateway 正在监听
+- Wit gateway 正在监听
+- Lens gateway 正在监听
 
 LaunchAgent 状态：
 
 - `ai.openclaw.gateway`（主实例）
 - `ai.openclaw.gateway.visual`
 - `ai.openclaw.gateway.copy`
+- `ai.openclaw.gateway.lens`
 
-三套已能并存。
+四套已能并存。
 
 ---
 
@@ -162,26 +194,37 @@ LaunchAgent 状态：
 - `/Users/yachen/.openclaw/openclaw.json`
 - `/Users/yachen/.openclaw-visual/openclaw.json`
 - `/Users/yachen/.openclaw-copy/openclaw.json`
+- `/Users/yachen/.openclaw-lens/openclaw.json`
 
 ### 启动脚本
-- `/Users/yachen/Desktop/OpenClaw_Visual.command`
-- `/Users/yachen/Desktop/OpenClaw_Copy.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Form.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Wit.command`
+- `/Users/yachen/ai-team-hub/scripts/OpenClaw_Lens.command`
+
+### 运维脚本
+- `/Users/yachen/ai-team-hub/ops/healthcheck-all.sh`
+- `/Users/yachen/ai-team-hub/ops/start-all.sh`
+- `/Users/yachen/ai-team-hub/ops/stop-all.sh`
+- `/Users/yachen/ai-team-hub/ops/restart-all.sh`
+- `/Users/yachen/ai-team-hub/ops/status-all.sh`
 
 ### LaunchAgents
 - `/Users/yachen/Library/LaunchAgents/ai.openclaw.gateway.plist`
 - `/Users/yachen/Library/LaunchAgents/ai.openclaw.gateway.visual.plist`
 - `/Users/yachen/Library/LaunchAgents/ai.openclaw.gateway.copy.plist`
+- `/Users/yachen/Library/LaunchAgents/ai.openclaw.gateway.lens.plist`
 
 ### 日志目录
 - `/Users/yachen/.openclaw/logs/`
 - `/Users/yachen/.openclaw-visual/logs/`
 - `/Users/yachen/.openclaw-copy/logs/`
+- `/Users/yachen/.openclaw-lens/logs/`
 
 ---
 
 ## 常用排查命令
 
-### 1. 看三个 gateway 是否都在
+### 1. 看四个 gateway 是否都在
 
 ```bash
 launchctl list | grep -i openclaw
@@ -192,7 +235,7 @@ launchctl list | grep -i openclaw
 ```bash
 python3 - <<'PY'
 import urllib.request
-for port in (18789, 18790, 18800):
+for port in (18789, 18790, 18800, 18810):
     for path in ('/health',):
         url=f'http://127.0.0.1:{port}{path}'
         try:
@@ -203,11 +246,12 @@ for port in (18789, 18790, 18800):
 PY
 ```
 
-### 3. 看 Visual / Copy 日志
+### 3. 看 Form / Wit / Lens 日志
 
 ```bash
 tail -100 /Users/yachen/.openclaw-visual/logs/gateway.err.log
 tail -100 /Users/yachen/.openclaw-copy/logs/gateway.err.log
+tail -100 /Users/yachen/.openclaw-lens/logs/gateway.err.log
 ```
 
 ### 4. 手动重载 LaunchAgent
@@ -218,6 +262,9 @@ launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.visual.plist
 
 launchctl unload ~/Library/LaunchAgents/ai.openclaw.gateway.copy.plist
 launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.copy.plist
+
+launchctl unload ~/Library/LaunchAgents/ai.openclaw.gateway.lens.plist
+launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.lens.plist
 ```
 
 ---
