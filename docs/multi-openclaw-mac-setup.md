@@ -6,8 +6,8 @@
 
 这台 Mac 上已经存在主 OpenClaw 实例，后来又逐步新增了三个专业分身：
 
-- `~/.openclaw-visual` → **Form**
-- `~/.openclaw-copy` → **Wit**
+- `~/.openclaw-form` → **Form**
+- `~/.openclaw-wit` → **Wit**
 - `~/.openclaw-lens` → **Lens**
 
 目标是让四个实例长期共存、互不串线、各自独立在线。
@@ -77,15 +77,15 @@
 ### 一、实例目录
 
 - 主实例：`~/.openclaw`
-- Form 实例（目录仍为 `~/.openclaw-visual`）
-- Wit 实例（目录仍为 `~/.openclaw-copy`）
+- Form 实例（目录仍为 `~/.openclaw-form`）
+- Wit 实例（目录仍为 `~/.openclaw-wit`）
 - Lens 实例：`~/.openclaw-lens`
 
 ### 二、端口规划
 
 - 主实例：`18789`
-- Form（目录仍为 `~/.openclaw-visual`）：`18790`
-- Wit（目录仍为 `~/.openclaw-copy`）：`18800`
+- Form（目录仍为 `~/.openclaw-form`）：`18790`
+- Wit（目录仍为 `~/.openclaw-wit`）：`18800`
 - Lens：`18810`
 
 ### 三、先把两个新实例默认模型切走
@@ -141,15 +141,15 @@
 #### Form LaunchAgent
 
 - Label: `ai.openclaw.gateway.visual`
-- `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-visual`
-- `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-visual/openclaw.json`
+- `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-form`
+- `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-form/openclaw.json`
 - `OPENCLAW_GATEWAY_PORT=18790`
 
 #### Wit LaunchAgent
 
 - Label: `ai.openclaw.gateway.copy`
-- `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-copy`
-- `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-copy/openclaw.json`
+- `OPENCLAW_STATE_DIR=/Users/yachen/.openclaw-wit`
+- `OPENCLAW_CONFIG_PATH=/Users/yachen/.openclaw-wit/openclaw.json`
 - `OPENCLAW_GATEWAY_PORT=18800`
 
 #### Lens LaunchAgent
@@ -192,8 +192,8 @@ LaunchAgent 状态：
 
 ### 实例配置
 - `/Users/yachen/.openclaw/openclaw.json`
-- `/Users/yachen/.openclaw-visual/openclaw.json`
-- `/Users/yachen/.openclaw-copy/openclaw.json`
+- `/Users/yachen/.openclaw-form/openclaw.json`
+- `/Users/yachen/.openclaw-wit/openclaw.json`
 - `/Users/yachen/.openclaw-lens/openclaw.json`
 
 ### 启动脚本
@@ -216,8 +216,8 @@ LaunchAgent 状态：
 
 ### 日志目录
 - `/Users/yachen/.openclaw/logs/`
-- `/Users/yachen/.openclaw-visual/logs/`
-- `/Users/yachen/.openclaw-copy/logs/`
+- `/Users/yachen/.openclaw-form/logs/`
+- `/Users/yachen/.openclaw-wit/logs/`
 - `/Users/yachen/.openclaw-lens/logs/`
 
 ---
@@ -249,8 +249,8 @@ PY
 ### 3. 看 Form / Wit / Lens 日志
 
 ```bash
-tail -100 /Users/yachen/.openclaw-visual/logs/gateway.err.log
-tail -100 /Users/yachen/.openclaw-copy/logs/gateway.err.log
+tail -100 /Users/yachen/.openclaw-form/logs/gateway.err.log
+tail -100 /Users/yachen/.openclaw-wit/logs/gateway.err.log
 tail -100 /Users/yachen/.openclaw-lens/logs/gateway.err.log
 ```
 

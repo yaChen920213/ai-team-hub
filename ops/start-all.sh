@@ -1,10 +1,6 @@
 #!/bin/zsh
 set -euo pipefail
 
-echo "== Start OpenClaw Team =="
-launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.plist 2>/dev/null || true
-launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.visual.plist 2>/dev/null || true
-launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.copy.plist 2>/dev/null || true
-launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.lens.plist 2>/dev/null || true
-sleep 3
-/Users/yachen/ai-team-hub/healthcheck-all.sh
+echo "== Start OpenClaw AI Team =="
+# Note: LaunchAgents have been removed. Use manual scripts in ../scripts/ instead.
+echo "Use: OpenClaw_Partner.command, OpenClaw_Radar.command, OpenClaw_Workshop.command"
